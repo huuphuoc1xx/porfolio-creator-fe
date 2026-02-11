@@ -1,0 +1,105 @@
+:root {
+  --page-bg: #f0f4f8;
+}
+
+[data-theme="dark"] {
+  --bg: #0e0e12;
+  --page-bg: #0f0f14;
+  --text: #f4f4f5;
+  --text-muted: #b8b8c4;
+  --accent: #818cf8;
+  --header-bg: rgba(14, 14, 18, 0.85);
+  --header-border: rgba(255, 255, 255, 0.1);
+  --card-bg: rgba(255, 255, 255, 0.06);
+  --card-border: rgba(255, 255, 255, 0.12);
+  --skill-tag-bg: rgba(129, 140, 248, 0.22);
+  --skill-tag-text: #c7d2fe;
+  --skill-tag-border: rgba(129, 140, 248, 0.4);
+  --btn-default-bg: rgba(255, 255, 255, 0.08);
+  --btn-default-border: rgba(255, 255, 255, 0.28);
+  --btn-default-text: #e4e4e7;
+  --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+[data-theme="light"] {
+  --bg: #f8f9fa;
+  --page-bg: #f0f4f8;
+  --text: #1a1a1a;
+  --text-muted: #4b5563;
+  --accent: #6366f1;
+  --header-bg: rgba(255, 255, 255, 0.95);
+  --header-border: rgba(0, 0, 0, 0.1);
+  --card-bg: rgba(0, 0, 0, 0.04);
+  --card-border: rgba(0, 0, 0, 0.12);
+  --skill-tag-bg: #e0e7ff;
+  --skill-tag-text: #4338ca;
+  --skill-tag-border: #a5b4fc;
+  --btn-default-bg: #fff;
+  --btn-default-border: rgba(0, 0, 0, 0.22);
+  --btn-default-text: #1a1a1a;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.ant-layout {
+  background: var(--bg) !important;
+}
+
+.footer-text {
+  color: var(--text-muted);
+}
+
+.skill-tag {
+  display: inline-block;
+  padding: 6px 14px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--skill-tag-text);
+  background: var(--skill-tag-bg);
+  border: 1px solid var(--skill-tag-border);
+  border-radius: 8px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.skill-tag:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.25);
+}
+
+.hero-greeting.ant-typography,
+.hero-summary.ant-typography {
+  color: var(--text-muted) !important;
+}
+
+.hero-content .ant-typography.ant-typography-secondary {
+  color: var(--text-muted) !important;
+}
+
+.section-title.ant-typography {
+  color: var(--text) !important;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+}

@@ -1,0 +1,22 @@
+.nav-menu.ant-menu-horizontal {
+  color: var(--text-muted);
+}
+
+.nav-menu.ant-menu-horizontal .ant-menu-item:hover {
+  color: var(--text);
+}
+
+@media (max-width: 768px) {
+  .nav-menu-desktop {
+    display: none !important;
+  }
+  .nav-menu-mobile {
+    display: block !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .nav-menu-mobile {
+    display: none !important;
+  }
+}

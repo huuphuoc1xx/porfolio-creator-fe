@@ -1,0 +1,17 @@
+.section {
+  padding: 64px 24px;
+  scroll-margin-top: 112px;
+}
+
+#hero {
+  scroll-margin-top: 112px;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.section-title {
+  margin-bottom: 32px !important;
+}
