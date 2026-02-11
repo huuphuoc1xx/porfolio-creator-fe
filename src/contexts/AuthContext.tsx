@@ -12,6 +12,8 @@ interface AuthContextValue {
   user: AuthUser | null;
   isAuthenticated: boolean;
   loading: boolean;
+  myPortfolioSlug: string | null;
+  refreshMyPortfolioSlug: () => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   register: (email: string, password: string) => Promise<void>;
   logout: () => void;
@@ -45,13 +47,31 @@ interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<AuthUser | null>(null);
+  const [myPortfolioSlug, setMyPortfolioSlug] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const refreshMyPortfolioSlug = useCallback(async () => {
+    try {
+      const p = await api.getMePortfolio();
+      setMyPortfolioSlug(p?.slug ?? null);
+    } catch {
+      setMyPortfolioSlug(null);
+    }
+  }, []);
 
   useEffect(() => {
     const u = loadStoredAuth();
     setUser(u);
     setLoading(false);
   }, []);
+
+  useEffect(() => {
+    if (!user) {
+      setMyPortfolioSlug(null);
+      return;
+    }
+    refreshMyPortfolioSlug();
+  }, [user, refreshMyPortfolioSlug]);
 
   const login = useCallback(async (email: string, password: string) => {
     const res = await api.login({ email, password });
@@ -83,6 +103,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const logout = useCallback(() => {
     setUser(null);
+    setMyPortfolioSlug(null);
     api.setAuthToken(null);
     try {
       localStorage.removeItem(AUTH_KEY);
@@ -95,6 +116,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     user,
     isAuthenticated: !!user,
     loading,
+    myPortfolioSlug,
+    refreshMyPortfolioSlug,
     login,
     register,
     logout,

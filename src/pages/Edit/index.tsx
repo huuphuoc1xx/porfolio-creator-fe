@@ -382,7 +382,7 @@ export default function EditPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { theme: themeMode } = useTheme();
-  const { isAuthenticated, loading: authLoading } = useAuth();
+  const { isAuthenticated, loading: authLoading, refreshMyPortfolioSlug } = useAuth();
   const [form] = Form.useForm();
   const [myPortfolio, setMyPortfolio] = useState<api.Portfolio | null | undefined>(undefined);
   const [localeEn, setLocaleEn] = useState<LocaleContent>(defaultLocaleEn);
@@ -447,6 +447,7 @@ export default function EditPage() {
       if (myPortfolio) {
         const updated = await api.updatePortfolio(myPortfolio.id, payload);
         setMyPortfolio(updated);
+        await refreshMyPortfolioSlug();
         setSuccess(t('edit.updated'));
         message.success(t('edit.updated'));
       } else {

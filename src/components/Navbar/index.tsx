@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Layout, Button, Menu, Dropdown, Switch } from 'antd';
@@ -8,7 +8,6 @@ import { Locale } from '../../config/i18n';
 import { useTheme, Theme } from '../../contexts/ThemeContext';
 import { useAuth } from '../../contexts/AuthContext';
 import { DEFAULT_SLUG } from '../../contexts/PortfolioContext';
-import * as api from '../../services/api';
 import './Navbar.css';
 
 const { Header } = Layout;
@@ -17,23 +16,14 @@ const linkIds = ['hero', 'about', 'skills', 'experience', 'education', 'contact'
 export default function Navbar() {
   const { t, i18n } = useTranslation();
   const { theme, toggleTheme } = useTheme();
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, myPortfolioSlug } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const { slug: paramSlug } = useParams<{ slug?: string }>();
   const [open, setOpen] = useState(false);
-  const [mySlug, setMySlug] = useState<string | null>(null);
   const isDark = theme === Theme.Dark;
   const isVi = i18n.language.startsWith('vi') || i18n.language === 'vn';
   const isPortfolioPage = location.pathname.startsWith('/p/') && paramSlug;
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      setMySlug(null);
-      return;
-    }
-    api.getMePortfolio().then((p) => setMySlug(p?.slug ?? null)).catch(() => setMySlug(null));
-  }, [isAuthenticated]);
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
@@ -149,11 +139,11 @@ export default function Navbar() {
                   ),
                 },
                 { type: 'divider' as const },
-                ...(mySlug
+                ...(myPortfolioSlug
                   ? [{
                       key: 'portfolio',
                       icon: <ProfileOutlined />,
-                      label: <Link to={`/p/${mySlug}`}>{t('edit.myPortfolio')}</Link>,
+                      label: <Link to={`/p/${myPortfolioSlug}`}>{t('edit.myPortfolio')}</Link>,
                     }]
                   : []),
                 {
